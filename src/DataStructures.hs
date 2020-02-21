@@ -1,5 +1,10 @@
 module DataStructures where
-    
+import Proof.Proof
+import Data.Char
+import Text.Megaparsec
+import Text.Megaparsec.Char
+import Data.Void(Void)
+import Data.Functor.Identity (Identity)
 -- Data structues taken from chapter 12 of Thinking Functionally with Haskell by Richard Bird
 
 -- Data Structures
@@ -7,15 +12,64 @@ data Law = Law LawName Equation deriving Show
 type LawName = String
 type Equation = (Expr, Expr)
 
-data Expr = Expr [Term] deriving Show
-data Term = Var VarName | Const ConstName | Op OpType | Paren ParenSide deriving Show
-type VarName = String
-type ConstName = String
-type OpType = String
-type ParenSide = String
-
 data Calculation = Calculation Expr [Step] deriving Show
 type Step = (LawName, Expr)
+
+data BOp = Add | Mul | Div | Sub | Pow
+data UOp = Sin | Cos | Ln 
+data Expr = Binop BOp Expr Expr
+            | Unary UOp Expr
+            | Const Int
+            deriving Show
+
+-- Parsing
+type Parser = Parsec Void String 
+
+parseExpr :: Parser Expr
+parseExpr = term >>= rest
+    where rest e1 = 
+        do  o <- parseBOp
+            e2 <- parseExpr
+            return (BinOp o e1 e2) <|>
+        return e1
+
+term :: Parser Expr
+term =  do  d <- some digit
+            return Const(toInt d) <|>
+        do  _ <- string "("
+            e <= parseExpr
+            _ <- string ")"
+            return e <|>
+        do  u <- parseUnary
+            return u
+
+parseUnary :: Parser Expr
+parseUnary = do utype <- parseUOp
+                arg <- parseExpr
+                return Unary utype arg
+
+parseUOp :: Parser UOp
+parseUOp =  do  _ <- string "sin"
+                return Sin <|>
+            do  _ <- string "cos"
+                return Mul <|>
+            do  _ <- string "ln"
+                return Ln <|>
+
+parseBOp :: Parser BOp
+parseBOp =  do  _ <- string "+"
+                return Add <|>
+            do  _ <- string "*"
+                return Mul <|>
+            do  _ <- string "/"
+                return Div <|>
+            do  _ <- string "-"
+                return Sub <|>
+            do  _ <- string "^"
+                return Pow <|>
+
+
+        
 
 -- Example
 exampleLaw = Law "Derivative of a Constant is Zero" (Expr [Op "d/dx", Const "a"], Expr [Const "0"])
