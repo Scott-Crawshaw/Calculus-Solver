@@ -34,6 +34,8 @@ operatorTable =
     , prefix "ln" (Unary Ln)
     ]
   ,
+    [ binary "^" (BinOp Pow)]
+  ,
     [ binary "*" (BinOp Mul)
     , binary "/" (BinOp Div)
     ]
