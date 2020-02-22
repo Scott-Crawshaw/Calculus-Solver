@@ -1,11 +1,9 @@
-module DataStructures where
-import Data.Char
+module Parse where
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Data.Void(Void)
 import Control.Monad.Combinators.Expr
 import qualified Text.Megaparsec.Char.Lexer as L
-import Data.Functor.Identity (Identity)
 
 -- Data Structures
 data Law = Law LawName Equation deriving Show
@@ -62,6 +60,7 @@ postfix name f = Postfix (f <$ symbol name)
 
 type Parser = Parsec Void String 
 
+parseInput :: String -> IO()
 parseInput p = parseTest (parseExpr <* eof) p
 
 
