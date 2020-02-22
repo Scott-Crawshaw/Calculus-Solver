@@ -1,6 +1,9 @@
 module Main where
 
-import Lib
+import Parse
 
 main :: IO ()
-main = someFunc
+main = do
+    putStrLn "Enter an expression to parse"
+    input <- getLine
+    parseInput input

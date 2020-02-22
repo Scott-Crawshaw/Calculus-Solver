@@ -28,7 +28,7 @@ source-repository head
 library
   exposed-modules:
       Lib
-    , DataStructures
+    , Parse
   other-modules:
       Paths_Calculus_Solver
   hs-source-dirs:
