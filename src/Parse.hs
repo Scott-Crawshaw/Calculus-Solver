@@ -65,16 +65,7 @@ parseInput p = parseTest (parseExpr <* eof) p
 
 parseExpr :: Parser Expr
 parseExpr = makeExprParser parseTerm operatorTable
-{-
-parseExpr :: Parser Expr
-parseExpr = parseTerm >>= rest
-    where rest e1 = (do {_ <- space;
-                        o <- parseBOp;
-                        _ <- space;
-                        e2 <- parseExpr;
-                        return (BinOp o e1 e2)}) <|>
-                    return e1
--}
+
 parseTerm :: Parser Expr
 parseTerm = do  {_ <- space;
                 _ <- string "(";
@@ -131,13 +122,4 @@ parseBOp =  do  {_ <- string "*";
             do  {_ <- string "-";
                 return Sub} <|>
             do  {_ <- string "^";
-                return Pow} 
-
-
-        
-
--- Example
-{-
-exampleLaw = Law "Derivative of a Constant is Zero" (Expr [Op "d/dx", Const "a"], Expr [Const "0"])
-exampleCalculation = Calculation (Expr [Op "d/dx", Const "5"]) [("Derivative of a Constant is Zero", Expr [Const "0"])]
--}
+                return Pow}
