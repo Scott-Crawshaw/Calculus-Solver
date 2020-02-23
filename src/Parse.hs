@@ -68,37 +68,38 @@ parseExpr :: Parser Expr
 parseExpr = makeExprParser parseTerm operatorTable
 
 parseTerm :: Parser Expr
-parseTerm = do  {_ <- space;
+parseTerm = (try $ do  {_ <- space;
                 _ <- string "(";
                 _ <- space;
                 e <- parseExpr;
                 _ <- space;
                 _ <- string ")";
                 _ <- space;
-                return e} <|>
-            do  {_ <- space;
+                return e}) <|>
+            (try $ do  {_ <- space;
                 u <- parseUnary;
                 _ <- space;
-                return u} <|>
-            do  {_ <- space;
+                return u}) <|>
+            (try $ do  {_ <- space;
                 _ <- string "deriv";
                 _ <- space;
                 v <- letterChar;
                 _ <- space;
                 e <- parseExpr;
                 _ <- space;
-                return (Deriv (Var v) e)} <|>
-            do  {_ <- space;
+                return (Deriv (Var v) e)}) <|>
+            (try $ do  {_ <- space;
                 d <- some digitChar;
                 _ <- space;
-                return (Const (read d))} <|>
+                return (Const (read d))}) <|>
             do  {_ <- space;
                 v <- letterChar;
                 _ <- space;
                 return (Var v)}
 
 parseUnary :: Parser Expr
-parseUnary = do {utype <- parseUOp;
+parseUnary = do {_ <- space;
+                utype <- parseUOp;
                 _ <- space;
                 arg <- parseExpr;
                 return (Unary utype arg)}
