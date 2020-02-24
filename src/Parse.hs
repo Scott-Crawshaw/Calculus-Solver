@@ -22,14 +22,29 @@ data Expr = BinOp BOp Expr Expr
             | Const Int
             deriving Show
 
+-- Laws
+derivativeOfSelf :: Law
+derivativeOfSelf = Law "Derivative of Self" (Deriv (Var 'x') (Var 'x'), Const 1)
+
+additionRule :: Law
+additionRule = Law "Sum Rule" (Deriv (Var 'x') (BinOp Add (Var 'a') (Var 'b')), BinOp Add (Deriv (Var 'x') (Var 'a')) (Deriv (Var 'x') (Var 'b')))
+
+productRule :: Law
+productRule = Law "Product Rule" (Deriv (Var 'x') (BinOp Mul (Var 'a') (Var 'b')), BinOp Add (BinOp Mul (Deriv (Var 'x') (Var 'a')) (Var 'b')) (BinOp Mul (Var 'a') (Deriv (Var 'x') (Var 'b'))))
+
+derivSin :: Law
+derivSin = Law "Derivative of Sin" (Deriv (Var 'x') (Unary Sin (Var 'a')), BinOp Mul (Unary Cos (Var 'a')) (Deriv (Var 'x') (Var 'a')))
+
+derivCos :: Law
+derivCos = Law "Derivative of Cos" (Deriv (Var 'x') (Unary Cos (Var 'a')), Unary Negation (Unary Sin (BinOp Mul (Var 'a') (Deriv (Var 'x') (Var 'a')))))
 -- Parsing
 operatorTable :: [[Operator Parser Expr]]
 operatorTable =
-  [ [ prefix "-" (Unary Negation)
-    , prefix "+" id
-    , prefix "sin" (Unary Sin)
+  [ [ prefix "sin" (Unary Sin)
     , prefix "cos" (Unary Cos)
     , prefix "ln" (Unary Ln)
+    , prefix "-" (Unary Negation)
+    , prefix "+" id
     ]
   ,
     [ binary "^" (BinOp Pow)]
@@ -77,10 +92,6 @@ parseTerm = (try $ do  {_ <- space;
                 _ <- space;
                 return e}) <|>
             (try $ do  {_ <- space;
-                u <- parseUnary;
-                _ <- space;
-                return u}) <|>
-            (try $ do  {_ <- space;
                 _ <- string "deriv";
                 _ <- space;
                 v <- letterChar;
@@ -88,6 +99,10 @@ parseTerm = (try $ do  {_ <- space;
                 e <- parseExpr;
                 _ <- space;
                 return (Deriv (Var v) e)}) <|>
+            (try $ do  {_ <- space;
+                u <- parseUnary;
+                _ <- space;
+                return u}) <|>
             (try $ do  {_ <- space;
                 d <- some digitChar;
                 _ <- space;
