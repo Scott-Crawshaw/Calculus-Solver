@@ -40,13 +40,13 @@ derivCos = Law "Derivative of Cos" (Deriv (Var 'x') (Unary Cos (Var 'a')), Unary
 -- Parsing
 operatorTable :: [[Operator Parser Expr]]
 operatorTable =
-  [ [ prefix "sin" (Unary Sin)
+  map (:[]) [ prefix "sin" (Unary Sin)
     , prefix "cos" (Unary Cos)
     , prefix "ln" (Unary Ln)
     , prefix "-" (Unary Negation)
     , prefix "+" id
-    ]
-  ,
+    ] ++
+  [
     [ binary "^" (BinOp Pow)]
   ,
     [ binary "*" (BinOp Mul)
@@ -70,7 +70,7 @@ binary :: String -> (Expr -> Expr -> Expr) -> Operator Parser Expr
 binary  name f = InfixL  (f <$ symbol name)
 
 prefix, postfix :: String -> (Expr -> Expr) -> Operator Parser Expr
-prefix  name f = Prefix  (f <$ symbol name)
+prefix  name f = Prefix  (foldr1 (.) <$> some (f <$ symbol name))
 postfix name f = Postfix (f <$ symbol name)
 
 type Parser = Parsec Void String 
@@ -100,17 +100,14 @@ parseTerm = (try $ do  {_ <- space;
                 _ <- space;
                 return (Deriv (Var v) e)}) <|>
             (try $ do  {_ <- space;
-                u <- parseUnary;
-                _ <- space;
-                return u}) <|>
-            (try $ do  {_ <- space;
                 d <- some digitChar;
                 _ <- space;
                 return (Const (read d))}) <|>
-            do  {_ <- space;
+            (try $ do  {_ <- space;
                 v <- letterChar;
+                _ <- notFollowedBy letterChar;
                 _ <- space;
-                return (Var v)}
+                return (Var v)})
 
 parseUnary :: Parser Expr
 parseUnary = do {_ <- space;
