@@ -29,6 +29,8 @@ library
   exposed-modules:
       Lib
     , Parse
+    , Laws
+    , DataStructures
   other-modules:
       Paths_Calculus_Solver
   hs-source-dirs:
