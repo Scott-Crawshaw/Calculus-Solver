@@ -1,4 +1,4 @@
-module Parse (parseInputExpr) where
+module Parse (parseInputExpr, parseInputLaw) where
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Control.Monad.Combinators.Expr
@@ -44,6 +44,11 @@ parseInputExpr p = case parse (parseExpr <* eof) "" p of
                       Left e -> Error (errorBundlePretty e)
                       Right x -> Correct x
 
+parseInputLaw :: String -> Result Law
+parseInputLaw p = case parse (parseLaw <* eof) "" p of
+                      Left e -> Error (errorBundlePretty e)
+                      Right x -> Correct x
+
 parseExpr :: Parser Expr
 parseExpr = makeExprParser parseTerm operatorTable
 
@@ -73,3 +78,17 @@ parseTerm = (try $ do  {_ <- space;
                 _ <- notFollowedBy letterChar;
                 _ <- space;
                 return (Var v)})
+
+parseLaw :: Parser Law
+parseLaw = do {_ <- space;
+               lawName <- many (alphaNumChar <|> spaceChar);
+               _ <- space;
+               _ <- string ":";
+               _ <- space;
+               left <- parseExpr;
+               _ <- space;
+               _ <- string "=";
+               _ <- space;
+               right <- parseExpr;
+               return (Law lawName (left, right))}
+               
