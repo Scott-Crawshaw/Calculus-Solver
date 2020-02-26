@@ -1,8 +1,10 @@
 module Laws (laws) where
 import DataStructures
+import Parse
 
 additionRule :: Law
-additionRule = Law "Sum Rule" (Deriv (Var 'x') (BinOp Add (Var 'a') (Var 'b')), BinOp Add (Deriv (Var 'x') (Var 'a')) (Deriv (Var 'x') (Var 'b')))
+additionRule = parseInputLaw "Sum Rule: deriv x (a + b) = (deriv x a) + (deriv x b)"
+--additionRule = Law "Sum Rule" (Deriv (Var 'x') (BinOp Add (Var 'a') (Var 'b')), BinOp Add (Deriv (Var 'x') (Var 'a')) (Deriv (Var 'x') (Var 'b')))
 
 productRule :: Law
 productRule = Law "Product Rule" (Deriv (Var 'x') (BinOp Mul (Var 'a') (Var 'b')), BinOp Add (BinOp Mul (Deriv (Var 'x') (Var 'a')) (Var 'b')) (BinOp Mul (Var 'a') (Deriv (Var 'x') (Var 'b'))))

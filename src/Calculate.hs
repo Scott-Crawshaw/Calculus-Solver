@@ -1,6 +1,7 @@
 module Calculate where
 import DataStructures
 import Laws
+import Prelude hiding (exp)
 
 -- Function does not work as aspected: Does not terminate
 calculate :: [Law] -> Expr -> Calculation
