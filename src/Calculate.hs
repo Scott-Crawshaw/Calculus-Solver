@@ -1,6 +1,7 @@
 module Calculate where
 import DataStructures
 import Laws
+import Prelude hiding (exp)
 
 -- Function does not work as aspected: Does not terminate
 calculate :: [Law] -> Expr -> Calculation
@@ -52,7 +53,6 @@ match (Unary opL expL) (Unary opE expE)
     | opL == opE = match expL expE
     | otherwise = []
 match (Var l) exp = [(Var l, exp)]
-match (Const l) (Const e) = [(Const l, Const e)]
 match _ _ = []
 
 -- test structures
