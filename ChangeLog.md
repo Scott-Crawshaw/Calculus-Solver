@@ -8,3 +8,9 @@
 - Re-wrote data structures in term tree format.
 - Developed a parser that can parse even complex expressions into our data stuctures.
 - Added a small program to Main.hs that allows one to test our parser with any given input.
+
+## 0.3.0.0
+- Made new files to organize code into components
+- Made progress on deriving an expression given a set of laws
+- Have a working function for rewriting an expression given a law equation
+- Do not have the ability to run a full derivation due to non-termination bug in our calculate function.

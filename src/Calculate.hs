@@ -2,19 +2,23 @@ module Calculate where
 import DataStructures
 import Laws
 
+-- Function does not work as aspected: Does not terminate
 calculate :: [Law] -> Expr -> Calculation
-calculate ls e = Calculation e (manyStep rws e):q
+calculate ls e = Calculation e (manyStep rws e)
     where rws e = [Step name e' | Law name eq <- ls, e' <- rewrites eq e]
 
+-- Function does not work as aspected: Does not terminate
 manyStep :: (Expr -> [Step]) -> Expr -> [Step]
 manyStep rws e = case steps of
                     [] -> []
                     (o@(Step _ e):_) -> o:manyStep rws e
                 where steps = rws e
 
+-- Function only returns lists of size 1, which is probably not right
 rewrites :: Equation -> Expr -> [Expr]
 rewrites (e1, e2) exp = [applyAll (getSubs e1 exp) e2]
 
+-- Applies all possible substitutions, which is probably not always right
 applyAll :: [(Expr, Expr)] -> Expr -> Expr
 applyAll [] e = e
 applyAll ((v, e):subs) e2 = applyAll subs (apply (v, e) e2)
@@ -39,17 +43,8 @@ getSubs e1 (Deriv var exp) = match e1 (Deriv var exp) ++
 getSubs e1 (Var c) = match e1 (Var c) ++ []
 getSubs e1 (Const i) = match e1 (Const i) ++ []
 
-testExp :: Expr
-testExp = Deriv (Var 'x') (BinOp Add (Var 'x') (Const 4))
-
-teste1 :: Expr
-teste1 = Deriv (Var 'x') (BinOp Add (Var 'a') (Var 'b'))
-
-testEqn :: Equation
-testEqn = (Deriv (Var 'x') (BinOp Add (Var 'a') (Var 'b')), BinOp Add (Deriv (Var 'x') (Var 'a')) (Deriv (Var 'x') (Var 'b')))
-
 match :: Expr -> Expr -> [(Expr, Expr)]
-match (Deriv varL expL) (Deriv varE expE) = match expL expE
+match (Deriv varL expL) (Deriv varE expE) = match varL varE ++ match expL expE
 match (BinOp opL leftL rightL) (BinOp opE leftE rightE)
     | opL == opE = match leftL leftE ++ match rightL rightE
     | otherwise = []
@@ -59,3 +54,13 @@ match (Unary opL expL) (Unary opE expE)
 match (Var l) exp = [(Var l, exp)]
 match (Const l) (Const e) = [(Const l, Const e)]
 match _ _ = []
+
+-- test structures
+testExp :: Expr
+testExp = Deriv (Var 'y') (BinOp Add (Var 'x') (Const 4))
+
+testE1 :: Expr
+testE1 = Deriv (Var 'x') (BinOp Add (Var 'a') (Var 'b'))
+
+testEqn :: Equation
+testEqn = (Deriv (Var 'x') (BinOp Add (Var 'a') (Var 'b')), BinOp Add (Deriv (Var 'x') (Var 'a')) (Deriv (Var 'x') (Var 'b')))
