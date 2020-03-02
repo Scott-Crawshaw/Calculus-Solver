@@ -17,6 +17,12 @@ data Expr = BinOp BOp Expr Expr
             | Var Char
             | Const Int
             deriving (Show, Eq)
+instance Show Expr where
+    show (BinOp bop expL expR) = (show expL) ++ (show bop) ++ (show expR)
+    show (Unary uop exp) = (show uop) ++ (show exp)
+    show (Deriv var exp) = "deriv " ++ (show var) ++ (show exp)
+    show (Var c) = show c
+    show (Const i) = show i
 
 type Parser = Parsec Void String 
 data Result a = Correct a | Error String deriving (Show, Eq)
