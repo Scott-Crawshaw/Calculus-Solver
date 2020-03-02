@@ -8,6 +8,7 @@ type Equation = (Expr, Expr)
 
 data Calculation = Calculation Expr [Step] deriving (Show, Eq)
 data Step = Step LawName Expr deriving (Show, Eq)
+type Subst = [(Expr, Expr)]
 
 data BOp = Add | Mul | Div | Sub | Pow deriving (Show, Eq)
 data UOp = Sin | Cos | Ln | Negation deriving (Show, Eq)
