@@ -25,7 +25,6 @@ data Expr = BinOp BOp Expr Expr
 type Parser = Parsec Void String 
 data Result a = Correct a | Error String deriving Eq
 
-
 -- show instances
 
 instance Show (Result Expr) where
@@ -39,7 +38,7 @@ instance Show (Result Calculation) where
 instance Show Expr where
     show (BinOp bop expL expR) = "(" ++ (show expL) ++ (show bop) ++ (show expR) ++ ")"
     show (Unary uop exp) = (show uop) ++ "(" ++ (show exp) ++ ")"
-    show (Deriv var exp) = "(deriv " ++ (show var) ++ ") " ++ (show exp)
+    show (Deriv var exp) = "deriv " ++ (show var) ++ " " ++ (show exp)
     show (Var c) = [c]
     show (Const i) = show i
 

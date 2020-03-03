@@ -1,8 +1,10 @@
+-- File reading code drawn from https://stackoverflow.com/a/7867786
+-- REPL code drawn from https://blogg.bekk.no/creating-a-repl-in-haskell-efcdef1deec2
+
 module Main where
 
 import Parse
 import Calculate
-import Laws
 import DataStructures
 import System.IO
 import Control.Monad (unless)
@@ -10,7 +12,6 @@ import Control.Monad (unless)
 main :: IO ()
 main = do
     input <- readLine
-    let list = []
     handle <- openFile "LawList.txt" ReadMode
     contents <- hGetContents handle
     let singlelines = lines contents

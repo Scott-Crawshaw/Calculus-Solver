@@ -81,7 +81,7 @@ parseTerm = (try $ do  {_ <- space;
 
 parseLaw :: Parser Law
 parseLaw = do {_ <- space;
-               lawName <- many (alphaNumChar <|> spaceChar);
+               lawName <- many (alphaNumChar <|> spaceChar <|> char '-');
                _ <- space;
                _ <- string ":";
                _ <- space;
