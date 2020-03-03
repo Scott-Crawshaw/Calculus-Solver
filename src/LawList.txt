@@ -1,0 +1,15 @@
+Addition Rule: (deriv x (a + b)) = (deriv x a) + (deriv x b) 
+Product Rule: (deriv x (a * b)) = (deriv x a) * b + a * (deriv x b) 
+Quotient Rule: (deriv x (a / b)) = ((b * (deriv x a)) - (a * (deriv x b))) / (b^2)
+Power Rule: deriv x (a ^ b) = a ^ b * (deriv x (b * ln(a))) 
+Derivative of Sin: deriv x (sin a) = (cos a) * (deriv x a)
+Derivative of Cos: deriv x (cos a) = -(sin a) * (deriv x a)
+Derivative of Ln: deriv x (ln a) = (1 / a) * (deriv x a) 
+Derivative of Self: deriv x x = 1
+Derivative of Constant: deriv x z = 0
+Multiplication by Zero: 0 * x = 0
+Multiplication by Zero: x * 0 = 0
+Multiplication by One: 1 * x = x
+Multiplication by One: x * 1 = x
+Addition with Zero: 0 + x = x
+Addition with Zero: x + 0 = x
