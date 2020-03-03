@@ -14,3 +14,10 @@
 - Made progress on deriving an expression given a set of laws
 - Have a working function for rewriting an expression given a law equation
 - Do not have the ability to run a full derivation due to non-termination bug in our calculate function.
+
+## 0.4.0.0
+- Program can now complete the full calculus derivation of a given expression.
+- Added custom show instances for human readable printing of derivation.
+- Need to create executable that ties parser and deriver together.
+- Need to allow for final arithmatic and algebraic steps.
+- Need to allow for laws to be drawn from input file.

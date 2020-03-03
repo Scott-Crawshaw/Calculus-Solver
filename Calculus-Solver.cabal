@@ -7,7 +7,7 @@ cabal-version: 1.12
 -- hash: 0355d9a8cd3276b8940fb83e34917ec12dbb251817ea768396a0acafd812a187
 
 name:           Calculus-Solver
-version:        0.3.0.0
+version:        0.4.0.0
 description:    Please see the README on GitHub at <https://github.com/Scott-Crawshaw/Calculus-Solver#readme>
 homepage:       https://github.com/Scott-Crawshaw/Calculus-Solver#readme
 bug-reports:    https://github.com/Scott-Crawshaw/Calculus-Solver/issues
@@ -41,6 +41,7 @@ library
       base >=4.7 && <5
     , megaparsec >= 5 && < 9
     , parser-combinators
+    , hint
   default-language: Haskell2010
 
 executable Calculus-Solver-exe

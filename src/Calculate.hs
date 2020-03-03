@@ -1,4 +1,4 @@
-module Calculate where
+module Calculate (derive) where
 import DataStructures
 import Laws
 import Prelude hiding (exp)
@@ -25,6 +25,7 @@ putItTogether e1 e2 exp
          (Deriv var exp) -> [Deriv var exp' | exp' <- putItTogether e1 e2 exp]
          _ -> []
 
+{-No longer used
 insertE2 :: Expr -> Expr -> Expr -> Expr
 insertE2 (BinOp op left right) modifiedE2 partExp
     | partExp == (BinOp op left right) = modifiedE2
@@ -40,10 +41,7 @@ insertE2 (Var c) modifiedE2 partExp
     | otherwise = Var c
 insertE2 (Const i) modifiedE2 partExp
     | partExp == (Const i) = modifiedE2
-    | otherwise = Const i
-
-testSubs :: Subst
-testSubs = [(Var 'x',Var 'x'),(Var 'a',Const 2),(Var 'b',Unary Ln (Var 'x'))]
+    | otherwise = Const i-}
 
 apply :: Subst -> Expr -> Expr
 apply subst (BinOp op left right) = BinOp op (apply subst left) (apply subst right)
@@ -55,11 +53,12 @@ apply ((v,e):subst) (Var c)
 apply [] x = x
 apply _ (Const i) = (Const i)
 
+{-No longer used
 removeBadEntries :: [(Expr, [(Expr, Expr)])] -> [(Expr, [(Expr, Expr)])]
 removeBadEntries [] = []
 removeBadEntries ((main, ls):subs)
     | length ls == 0 = removeBadEntries subs
-    | otherwise = (main, ls) : removeBadEntries subs
+    | otherwise = (main, ls) : removeBadEntries subs-}
 
 match :: Expr -> Expr -> [Subst]
 match (Deriv varL expL) (Deriv varE expE) = [l ++ r | l<-match varL varE, r<-match expL expE,compatible l r]
@@ -69,7 +68,12 @@ match (BinOp opL leftL rightL) (BinOp opE leftE rightE)
 match (Unary opL expL) (Unary opE expE)
     | opL == opE = match expL expE
     | otherwise = []
+match (Var 'z') (Const i) = [[((Var 'z'), (Const i))]]
+match (Var 'z') _ = []
 match (Var l) exp = [[(Var l, exp)]]
+match (Const i) (Const a)
+    | i==a = [[((Const i), (Const i))]]
+    | otherwise = []
 match _ _ = []
 
 compatible :: Subst -> Subst -> Bool
@@ -81,7 +85,7 @@ compatible _ _ = True
 
 -- test structures
 testExp :: Expr
-testExp = (Deriv (Var 'x') (BinOp Pow (Var 'x') (Const 2)))
+testExp = (Deriv (Var 'x') (BinOp Div (Var 'x') (Const 2)))
 
 testE1 :: Expr
 testE1 = (Deriv (Var 'x') (BinOp Mul (Var 'a') (Var 'b')))
@@ -94,3 +98,6 @@ testEqn = (Deriv (Var 'x') (BinOp Mul (Var 'a') (Var 'b')), BinOp Add (BinOp Mul
 
 testPart :: Expr
 testPart = (Deriv (Var 'x') (BinOp Mul (Const 2) (Unary Ln (Var 'x'))))
+
+testSubs :: Subst
+testSubs = [(Var 'x',Var 'x'),(Var 'a',Const 2),(Var 'b',Unary Ln (Var 'x'))]
