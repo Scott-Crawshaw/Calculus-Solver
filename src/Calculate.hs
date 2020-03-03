@@ -9,8 +9,9 @@ manyStep ls e = case steps of
                     (Step name exp):_ -> (Step name exp) : (manyStep ls exp)
                 where steps = makeStep ls e
 
-derive :: [Law] -> Expr -> Calculation
-derive ls e = Calculation e (manyStep ls e)
+derive :: [Law] -> Result Expr -> Result Calculation
+derive ls (Correct e) = Correct (Calculation e (manyStep ls e))
+derive _ (Error str) = Error str
 
 makeStep :: [Law] -> Expr -> [Step]
 makeStep ls e = [Step name res | Law name (e1, e2) <- ls, res <- (putItTogether e1 e2 e)]

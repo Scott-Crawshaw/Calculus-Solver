@@ -44,10 +44,10 @@ parseInputExpr p = case parse (parseExpr <* eof) "" p of
                       Left e -> Error (errorBundlePretty e)
                       Right x -> Correct x
 
-parseInputLaw :: String -> Result Law
+parseInputLaw :: String -> [Law]
 parseInputLaw p = case parse (parseLaw <* eof) "" p of
-                      Left e -> Error (errorBundlePretty e)
-                      Right x -> Correct x
+                      Left _ -> []
+                      Right x -> [x]
 
 parseExpr :: Parser Expr
 parseExpr = makeExprParser parseTerm operatorTable

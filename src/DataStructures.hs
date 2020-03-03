@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 module DataStructures where
 import Text.Megaparsec
 import Data.Void(Void)
@@ -21,9 +23,18 @@ data Expr = BinOp BOp Expr Expr
             deriving Eq
 
 type Parser = Parsec Void String 
-data Result a = Correct a | Error String deriving (Show, Eq)
+data Result a = Correct a | Error String deriving Eq
+
 
 -- show instances
+
+instance Show (Result Expr) where
+    show (Correct exp) = show exp
+    show (Error str) = show str
+
+instance Show (Result Calculation) where
+    show (Correct exp) = show exp
+    show (Error str) = show str
 
 instance Show Expr where
     show (BinOp bop expL expR) = "(" ++ (show expL) ++ (show bop) ++ (show expR) ++ ")"

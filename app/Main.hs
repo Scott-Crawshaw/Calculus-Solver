@@ -4,28 +4,27 @@ import Parse
 import Calculate
 import Laws
 import DataStructures
+import System.IO
+import Control.Monad (unless)
 
 main :: IO ()
-main = undefined
+main = do
+    input <- readLine
+    let list = []
+    handle <- openFile "LawList.txt" ReadMode
+    contents <- hGetContents handle
+    let singlelines = lines contents
+        list = mapLaws singlelines
+    unless(input == ":quit")
+        $ printCalc (derive list (parseInputExpr input)) >> main
 
---The below code not work
-{-main = do
-    putStrLn "Enter an expression to derive"
-    input <- getLine
-    inputExp <- (parseInputExpr input)
-    isInputCorrect <- (isCorrect inputExp)
-    if not isInputCorrect
-        then do 
-            print inputExp
-        else do
-            expr <- (extractExpr inputExp)
-            derivation <- (derive laws expr)
-            print derivation
-    
-isCorrect :: Result a -> Bool
-isCorrect (Correct a) = True
-isCorrect _ = False
+mapLaws :: [String] -> [Law]
+mapLaws = concat . (map parseInputLaw)
 
-extractExpr :: Result Expr -> Expr
-extractExpr (Correct e) = e
-extractExpr _ = undefined-}
+readLine :: IO String
+readLine = putStr "Enter an expression to parse\n"
+    >> hFlush stdout
+    >> getLine
+
+printCalc :: Result Calculation -> IO()
+printCalc calc = putStrLn (show calc)
