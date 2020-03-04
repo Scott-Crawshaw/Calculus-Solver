@@ -13,7 +13,7 @@ derive ls (Correct e) = Correct (Calculation e (manyStep ls e))
 derive _ (Error str) = Error str
 
 makeStep :: [Law] -> Expr -> [Step]
-makeStep ls e = [Step name res | Law name (e1, e2) <- ls, res <- (putItTogether e1 e2 e)]
+makeStep ls e = [Step name res | Law name (e1, e2) <- ls, res <- (map manyArithmetic (putItTogether e1 e2 e))]
 
 putItTogether :: Expr -> Expr -> Expr -> [Expr]
 putItTogether e1 e2 exp
@@ -24,6 +24,26 @@ putItTogether e1 e2 exp
          (Unary op e) -> [Unary op exp' | exp' <- putItTogether e1 e2 e]
          (Deriv var e) -> [Deriv var exp' | exp' <- putItTogether e1 e2 e]
          _ -> []
+
+manyArithmetic :: Expr -> Expr
+manyArithmetic exp
+    | exp == (arithmetic exp) = exp
+    | otherwise = manyArithmetic (arithmetic exp)
+
+arithmetic :: Expr -> Expr
+arithmetic (BinOp op (Const a) (Const b)) = Const((getOp op) a b)
+arithmetic (BinOp op left right) = BinOp op (arithmetic left) (arithmetic right)
+arithmetic (Unary op exp) = Unary op (arithmetic exp)
+arithmetic (Deriv var exp) = Deriv var (arithmetic exp)
+arithmetic exp = exp
+
+getOp :: BOp -> (Int -> Int -> Int)
+getOp op
+    | op == Add = (+)
+    | op == Mul = (*)
+    | op == Div = div
+    | op == Sub = (-)
+    | otherwise = (^)
 
 apply :: Subst -> Expr -> Expr
 apply subst (BinOp op left right) = BinOp op (apply subst left) (apply subst right)
