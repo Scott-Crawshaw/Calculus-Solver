@@ -7,9 +7,7 @@ We have also created functions that can perform the steps needed to solve a give
 Finally, we created a command line interface that ties all the pieces together. When prompted, the user inputs an expression, recieves a calculation in human-readable format, and can continue to input more expressions should they desire.
 
 ## Need to Complete
-In terms of whats left of the main portion of the assignment, we need to decide where exactly the parentheses should be in the show instances of our datatypes. While their current placement is mathematically fine, it can be overwhelming to the reader. We also need to fix our printing of error messages; currently, they are printed with newline characters rather than creating a new line at said character locations.
-  
-We also need to finish the "Special Feature" portion of the assignment. While we have allowed for laws to be read from a law file, we still need to implement arithmatic and alegebra. We would like our derivation to not stop when the calculus is complete, but to instead perform the final arithmatic and algebraic steps required to fully complete the derivation. We will hopefully use a package that can perform this arithmatic and algebra for us. It appears the "hint" package can perform the arithmatic.
+We also need to finish the "Special Feature" portion of the assignment. While we have allowed for laws to be read from a law file, we still need to implement arithmatic and alegebra. We would like our derivation to not stop when the calculus is complete, but to instead perform the final arithmetic and algebraic steps required to fully complete the derivation. 
 
 ## Instructions
 To use our command line interface, simply run 'stack install', run the mentioned executable, and then input an expression when prompted. Instead of writing d/dx, write deriv x. If you would like to make adjustments to the laws, do so in LawList.txt.

@@ -16,3 +16,23 @@ Multiplication by One: x * 1 = x
 Addition with Zero: 0 + x = x
 Addition with Zero: x + 0 = x
 Zero is Non-Negative: -0 = 0
+Rewrite Fraction as Exponent: a / x = a * (x ^ (-1))
+Rewrite Fraction as Exponent: a / (x ^ b) = a * (x ^ (-b))
+Combine Exponents: (x ^ a) * (x ^ b) = (x ^ (a + b))
+Combine Exponents: (x ^ a) * (z * (x ^ b)) = z * (x ^ (a + b))
+Add and Subtract: x + -(z) = x - z
+Simplify Exponent: x ^ 1 = x
+// there are a TON of bugs with the Add Variables laws
+// at this point instead of hard-coding all possible situations with 3 constants/variables
+// it would probably be better to write a function or just say our program won't do it
+Add Variables: m * x + n * x = (m + n) * x
+Add Variables: m * x - n * x = (m - n) * x
+Add Variables: z + m * x + n * x = z + (m + n) * x
+Add Variables: z + m * x - n * x = z + (m - n) * x
+Add Variables: m * x + z + n * x = z + (m + n) * x
+Add Variables: m * x + z - n * x = z + (m - n) * x
+
+Basic Arithmetic: z + x + y = (z + y) + x
+Basic Arithmetic: z + x - y = (z - y) + x
+Basic Arithmetic: z - x + y = (z + y) - x
+Basic Arithmetic: z - x - y = (z - y) - x
