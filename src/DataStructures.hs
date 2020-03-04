@@ -26,14 +26,9 @@ type Parser = Parsec Void String
 data Result a = Correct a | Error String deriving Eq
 
 -- show instances
-
-instance Show (Result Expr) where
-    show (Correct exp) = show exp
-    show (Error str) = show str
-
-instance Show (Result Calculation) where
-    show (Correct exp) = show exp
-    show (Error str) = show str
+instance Show a => Show (Result a) where
+    show (Correct cor) = show cor
+    show (Error str) = str
 
 instance Show Expr where
     show (BinOp bop expL expR) = "(" ++ (show expL) ++ (show bop) ++ (show expR) ++ ")"
@@ -56,10 +51,14 @@ instance Show UOp where
     show Negation = "-"
 
 instance Show Law where
-    show (Law name (e1, e2)) = (show name) ++ ": " ++ (show e1) ++ " = " ++ (show e2)
+    show (Law name (e1, e2)) = (show name) ++ ": " ++ (outerShow e1) ++ " = " ++ (outerShow e2)
 
 instance Show Step where
-    show (Step name exp) = "= {" ++ (show name) ++ "}\n" ++ (show exp) ++ "\n"
+    show (Step name exp) = "= {" ++ (show name) ++ "}\n" ++ (outerShow exp) ++ "\n"
+
+outerShow :: Expr -> String
+outerShow (BinOp bop expL expR) = (show expL) ++ (show bop) ++ (show expR)
+outerShow exp = show exp
 
 instance Show Calculation where
-    show (Calculation exp steps) = (show exp) ++ "\n" ++ (concatMap (show) (steps))
+    show (Calculation exp steps) = (outerShow exp) ++ "\n" ++ (concatMap (show) (steps))
