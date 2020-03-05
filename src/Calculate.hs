@@ -66,6 +66,8 @@ match (Unary opL expL) (Unary opE expE)
     | otherwise = []
 match (Var 'z') (Const i) = [[((Var 'z'), (Const i))]]
 match (Var 'z') _ = []
+match (Var 'q') (Var c) = [[((Var 'q'), (Var c))]]
+match (Var 'q') _ = []
 match (Var l) exp = [[(Var l, exp)]]
 match (Const i) (Const a)
     | i==a = [[((Const i), (Const i))]]

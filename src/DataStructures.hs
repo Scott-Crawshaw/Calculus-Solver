@@ -61,4 +61,4 @@ outerShow (BinOp bop expL expR) = (show expL) ++ (show bop) ++ (show expR)
 outerShow exp = show exp
 
 instance Show Calculation where
-    show (Calculation exp steps) = (outerShow exp) ++ "\n" ++ (concatMap (show) (steps))
+    show (Calculation _ steps) = (concatMap (show) (steps))

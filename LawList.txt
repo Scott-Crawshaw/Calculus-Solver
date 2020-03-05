@@ -1,3 +1,4 @@
+Cancellation Rule: deriv x (a - a) = 0
 Addition Rule: (deriv x (a + b)) = (deriv x a) + (deriv x b)
 Subtraction Rule: (deriv x (a - b)) = (deriv x a) - (deriv x b)
 Product Rule: (deriv x (a * b)) = (deriv x a) * b + a * (deriv x b)
@@ -8,6 +9,7 @@ Derivative of Cos: deriv x (cos a) = -(sin a) * (deriv x a)
 Derivative of Ln: deriv x (ln a) = (1 / a) * (deriv x a)
 Derivative of Self: deriv x x = 1
 Derivative of Constant: deriv x z = 0
+Derivative of Fixed Variable: deriv x q = 0
 Derivative of Negation: deriv x -a = -(deriv x a)
 Multiplication by Zero: 0 * x = 0
 Multiplication by Zero: x * 0 = 0
@@ -22,17 +24,3 @@ Combine Exponents: (x ^ a) * (x ^ b) = (x ^ (a + b))
 Combine Exponents: (x ^ a) * (z * (x ^ b)) = z * (x ^ (a + b))
 Add and Subtract: x + -(z) = x - z
 Simplify Exponent: x ^ 1 = x
-// there are a TON of bugs with the Add Variables laws
-// at this point instead of hard-coding all possible situations with 3 constants/variables
-// it would probably be better to write a function or just say our program won't do it
-Add Variables: m * x + n * x = (m + n) * x
-Add Variables: m * x - n * x = (m - n) * x
-Add Variables: z + m * x + n * x = z + (m + n) * x
-Add Variables: z + m * x - n * x = z + (m - n) * x
-Add Variables: m * x + z + n * x = z + (m + n) * x
-Add Variables: m * x + z - n * x = z + (m - n) * x
-
-Basic Arithmetic: z + x + y = (z + y) + x
-Basic Arithmetic: z + x - y = (z - y) + x
-Basic Arithmetic: z - x + y = (z + y) - x
-Basic Arithmetic: z - x - y = (z - y) - x
