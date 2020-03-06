@@ -19,7 +19,10 @@ Our program reads in laws from the file LawList.txt. For ease of use, these laws
 ### Performing Arithmetic
 To generate a more simplified derivation, we wove basic arithmetic into our step generation. During each intermediary step, basic arithmetic is performed to simplify the output.
 
+### More Info to Come...
+
 ## Instructions
+More to come...
 
 ## Authors
 Scott Crawshaw & Jessica Cheng 2020  
