@@ -6,7 +6,7 @@ main :: IO ()
 main = defaultMain (testGroup "Library Tests" [basicTest, lawParserTest, exprParserTest, deriveTest])
 basicTest, lawParserTest, exprParserTest, deriveTest :: TestTree
 basicTest = localOption (Timeout 1000000 "1 second") $
-    testCase "Test file works" (assertBool "Something is deeply wrong with the test file" (1 == 1))
+    testCase "Test file works" (assertBool "Something is deeply wrong with the test file" (True == True))
 lawParserTest = localOption (Timeout 1000000 "1 second") $
     testCase "Law parser does not generate errors" (assertBool "Not all laws parsed successfully" ((length laws) == (length lawStrings)))
 exprParserTest = localOption (Timeout 1000000 "1 second") $
