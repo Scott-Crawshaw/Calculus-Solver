@@ -1,16 +1,25 @@
 # Calculus-Solver
-## Completed
-We have created appropriate data structures and have developed a parser that can parse even complex expressions into said data structures. The parser can work with binary operations such as +, -, *, ^, and /, as well as unary operations such as sin, cos, ln, -, and + (+ and - as prefixes).  
-  
-We have also created functions that can perform the steps needed to solve a given expression using a set of hard coded laws. The function derive takes an expression and a set of laws and produces a derivation in human readable format. To write expressions in human readable format, we created our own show instances for many of our datatypes. Our only issue is that these show instances don't always put parentheses in the correct locations.
+## Main Project
+### Data Types
+To accurately represent the order of operations with an expression, we built our expression data type using a term tree. This term tree can take binary operations such as addition, multiplication, etc., unary operations such as sin, cos, etc., variables, and constants. For all of our datatypes, we wrote custom show instances to display our data in human readable format. 
 
-Finally, we created a command line interface that ties all the pieces together. When prompted, the user inputs an expression, recieves a calculation in human-readable format, and can continue to input more expressions should they desire.
+### Parsing
+We developed two parsers, one for laws and one for expressions. Both parsers take a string as an input and either generate the desired object or print a detailed error message. The expression parser is used to process the initial input via the command line interface, while the law parser is used to parse laws from a plain text file.
 
-## Need to Complete
-We also need to finish the "Special Feature" portion of the assignment. While we have allowed for laws to be read from a law file, we still need to implement arithmatic and alegebra. We would like our derivation to not stop when the calculus is complete, but to instead perform the final arithmetic and algebraic steps required to fully complete the derivation. 
+### Generating the Derivation
+We created a function that, given an expression and a set of laws, will generate the appropriate derivation, including all intermediary steps. This function is called via the command line interface to derive a provided expression.
+
+### Testing
+We created comprhensive test cases that ensure that our program functions as expected. This ensures that changes made to one part of the project do not impact other parts unexpectedly.
+
+## Special Features
+### Reading Laws from Text File
+Our program reads in laws from the file LawList.txt. For ease of use, these laws are written in human readable format and are later parsed into the appropriate data types. Our pre-made set of laws is ordered in an ideal way to provide the shortest possible derivations.
+
+### Performing Arithmetic
+To generate a more simplified derivation, we wove basic arithmetic into our step generation. During each intermediary step, basic arithmetic is performed to simplify the output.
 
 ## Instructions
-To use our command line interface, simply run 'stack install', run the mentioned executable, and then input an expression when prompted. Instead of writing d/dx, write deriv x. If you would like to make adjustments to the laws, do so in LawList.txt.
 
 ## Authors
 Scott Crawshaw & Jessica Cheng 2020  

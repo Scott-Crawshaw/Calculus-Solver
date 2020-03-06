@@ -27,3 +27,9 @@
 - The laws are now drawn from a LawList.txt, a file that contains all of the laws in human readable format.
 - Need to implement final arithmatic and algebraic steps.
 - Need to fix placement of parentheses in printed expression.
+
+## 1.0.0.0
+- Release version 1.0.0.0 includes a polished final product with no known bugs.
+- Can perform most arithmatic and algebraic steps required to complete a calculus derivation.
+- Pretty prints derivations with the proper spacing and parentheses.
+- Reads laws from an easily edited text file, LawList.txt.
