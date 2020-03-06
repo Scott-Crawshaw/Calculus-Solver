@@ -1,4 +1,4 @@
-Cancellation Rule: deriv x (a - a) = 0
+Cancellation Rule: (a - a) = 0
 Addition Rule: (deriv x (a + b)) = (deriv x a) + (deriv x b)
 Subtraction Rule: (deriv x (a - b)) = (deriv x a) - (deriv x b)
 Product Rule: (deriv x (a * b)) = (deriv x a) * b + a * (deriv x b)
@@ -17,6 +17,8 @@ Multiplication by One: 1 * x = x
 Multiplication by One: x * 1 = x
 Addition with Zero: 0 + x = x
 Addition with Zero: x + 0 = x
+Subtraction with Zero: 0 - x = x
+Subtraction with Zero: x - 0 = x
 Zero is Non-Negative: -0 = 0
 Rewrite Fraction as Exponent: a / x = a * (x ^ (-1))
 Rewrite Fraction as Exponent: a / (x ^ b) = a * (x ^ (-b))
