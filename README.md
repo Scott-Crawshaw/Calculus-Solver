@@ -22,7 +22,14 @@ To generate a more simplified derivation, we wove basic arithmetic into our step
 ### More Info to Come...
 
 ## Instructions
-More to come...
+### Deriving a Calculus Expression
+If you would like help deriving an calculus expression, go to the command line, navigate to /Calculus-Solver/, and run 'stack install'. Then run the mentioned executable and, when prompted, type your expression. Instead of d/dx, write deriv x. Also, make sure to include multiplication signs whenever neccesary (i.e. 2x will not work, you must write 2*x).
+
+### Changing Laws
+If you would like to add your own calculus or algebra laws, feel free to edit LawList.txt. Laws must be on their own line and must be written in the following format: Law Name: Law Equation. Laws on earlier lines in the file are given higher precendence (applied first), so be mindful about where you place your laws within the file. In the law equation, use q to represent a fixed variable and z to represent a constant. Feel free to use any other letter to represent anything else.
+
+### Running Tests
+To run our test suite, go to the command line, navigate to /Calculus-Solver/, and run 'stack test'.
 
 ## Authors
 Scott Crawshaw & Jessica Cheng 2020  
