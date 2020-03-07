@@ -9,6 +9,7 @@ import DataStructures
 import System.IO
 import Control.Monad (unless)
 
+-- Exectuable interface
 main :: IO ()
 main = do
     input <- readLine
@@ -19,13 +20,16 @@ main = do
     unless(input == ":quit")
         $ printCalc (derive list (parseInputExpr input)) >> main
 
+-- Takes a list of strings and converts each string into a Lawe
 mapLaws :: [String] -> [Law]
 mapLaws = concat . (map parseInputLaw)
 
+-- Prompts user for input and returns input
 readLine :: IO String
 readLine = putStr "Enter an expression to parse\n"
     >> hFlush stdout
     >> getLine
 
+-- Prints Calculation
 printCalc :: Result Calculation -> IO()
 printCalc calc = putStrLn (show calc)

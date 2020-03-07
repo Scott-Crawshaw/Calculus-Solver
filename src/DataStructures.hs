@@ -15,6 +15,8 @@ type Subst = [(Expr, Expr)]
 
 data BOp = Add | Mul | Div | Sub | Pow deriving Eq
 data UOp = Sin | Cos | Ln | Negation deriving Eq
+
+-- Uses term tree structure to maintain proper order of operations
 data Expr = BinOp BOp Expr Expr
             | Unary UOp Expr
             | Deriv Expr Expr
@@ -56,6 +58,7 @@ instance Show Law where
 instance Show Step where
     show (Step name exp) = "= {" ++ (show name) ++ "}\n" ++ (outerShow exp) ++ "\n"
 
+-- Helper function that shows without outer parentheses
 outerShow :: Expr -> String
 outerShow (BinOp bop expL expR) = (show expL) ++ (show bop) ++ (show expR)
 outerShow exp = show exp
