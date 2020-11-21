@@ -1,4 +1,4 @@
-# Calculus-Solver
+# Calculus Solver
 ## Main Project
 
 ### Project Overview 
